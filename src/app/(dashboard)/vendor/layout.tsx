@@ -3,7 +3,8 @@
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import { Sidebar } from '@/components/vendor/Sidebar';
-import { Header } from '@/components/vendor/Header';
+import Header from '@/components/vendor/Header';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function VendorLayout({
   children,
@@ -13,7 +14,11 @@ export default function VendorLayout({
   const { data: session, status } = useSession();
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-primary"></div>
+      </div>
+    );
   }
 
   if (!session || session.user.role !== 'VENDOR') {
@@ -21,14 +26,19 @@ export default function VendorLayout({
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="relative flex min-h-screen">
+      {/* Sidebar */}
       <Sidebar />
-      <div className="flex flex-col flex-1 overflow-hidden">
+      
+      {/* Main Content */}
+      <div className="flex flex-1 flex-col">
         <Header />
-        <main className="flex-1 overflow-y-auto p-4">
+        <main className="flex-1 overflow-x-hidden bg-gray-50/50 p-4 dark:bg-gray-900/50 lg:p-8">
           {children}
         </main>
       </div>
+      
+      <Toaster />
     </div>
   );
 } 

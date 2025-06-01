@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Navbar } from '@/components/shared/Navbar';
+import { NavbarWrapper } from '@/components/shared/NavbarWrapper';
 import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -28,8 +28,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NextAuthProvider>
-            <Navbar />
-            <main className="min-h-screen">
+            <NavbarWrapper />
+            <main>
               {children}
             </main>
             <Toaster richColors closeButton position="top-center" />
